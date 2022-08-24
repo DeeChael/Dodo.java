@@ -1,12 +1,14 @@
 package net.deechael.dodo.api;
 
+import net.deechael.dodo.event.Listener;
+
 public interface Bot {
 
     void start();
 
-    void shutdown();
+    void runAfter(Runnable runnable);
 
-    User me();
+    void addEventListener(Listener listener);
 
     Client getClient();
 

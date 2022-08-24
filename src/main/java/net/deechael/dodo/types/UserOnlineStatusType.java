@@ -16,4 +16,14 @@ public enum UserOnlineStatusType {
         this.code = code;
     }
 
+    public static UserOnlineStatusType of(int code) {
+        if (code == 1)
+            return ONLINE;
+        if (code == 2)
+            return WORKING;
+        if (code == 3)
+            return LEAVE;
+        return OFFLINE;
+    }
+
 }

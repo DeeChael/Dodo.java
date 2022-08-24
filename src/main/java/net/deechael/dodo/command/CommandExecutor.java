@@ -1,10 +1,10 @@
 package net.deechael.dodo.command;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import net.deechael.dodo.api.Message;
+import net.deechael.dodo.api.MessageContext;
 
 public interface CommandExecutor {
 
-    LiteralCommandNode<Message> brigadier(String name);
+    LiteralCommandNode<MessageContext> brigadier(String name);
 
 }

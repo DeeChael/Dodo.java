@@ -15,4 +15,12 @@ public enum UserSexType {
         this.code = code;
     }
 
+    public static UserSexType of(int code) {
+        if (code > 0)
+            return MALE;
+        if (code == 0)
+            return FEMALE;
+        return SECRET;
+    }
+
 }

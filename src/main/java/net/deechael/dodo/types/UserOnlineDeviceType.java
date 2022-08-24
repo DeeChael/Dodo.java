@@ -15,4 +15,12 @@ public enum UserOnlineDeviceType {
         this.code = code;
     }
 
+    public static UserOnlineDeviceType of(int code) {
+        if (code == 1)
+            return PC;
+        if (code == 2)
+            return PHONE;
+        return NONE;
+    }
+
 }

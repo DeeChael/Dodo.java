@@ -28,3 +28,7 @@ hs_err_pid*
 # Gradle
 .gradle
 build
+
+# Dodo.java testing
+test-config.yml
+test.png

@@ -5,8 +5,10 @@ import lombok.Getter;
 public enum MessageType {
 
     TEXT(1, "text"),
-    IMG(2, "image"),
+    IMAGE(2, "image"),
     VIDEO(3, "video"),
+    SHARE(4, "share"),
+    FILE(5, "file"),
     CARD(6, "card"),
     UNKNOWN(-1, "unknown");
 
@@ -25,7 +27,7 @@ public enum MessageType {
             case 1:
                 return TEXT;
             case 2:
-                return IMG;
+                return IMAGE;
             case 3:
                 return VIDEO;
             case 6:

@@ -1,11 +1,18 @@
 package net.deechael.dodo.network;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import lombok.NonNull;
+import net.deechael.dodo.API;
 import net.deechael.dodo.utils.NetworkUtils;
+import net.deechael.useless.function.parameters.Parameter;
 import okhttp3.*;
 import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 public class WebSocketReceiver extends Receiver {
 
@@ -14,12 +21,55 @@ public class WebSocketReceiver extends Receiver {
     private PacketListener listener = new PacketListener(this);
     private WebSocket webSocket;
 
-    public WebSocketReceiver(OkHttpClient client, String token) {
-        super(client, token);
+    private Parameter<JsonObject> solver;
+
+    private boolean started = false;
+    private boolean triedToStart = false;
+
+    public WebSocketReceiver(OkHttpClient client, int clientId, String token, Parameter<JsonObject> solver) {
+        super(client, clientId, token);
+        this.solver = solver;
     }
 
     @Override
     public void start() {
+        if (triedToStart)
+            return;
+        triedToStart = true;
+        String auth = "Bot " + getClientId() + "." + getToken();
+        Request req = new Request.Builder()
+                .post(RequestBody.create(new byte[0], MediaType.get("application/json")))
+                .header("Authorization", auth)
+                .header("Content-type", "application/json")
+                .url(API.BASE_URL + API.V1.Websocket.connection().getRoute()).build();
+        Call call = getClient().newCall(req);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                LOGGER.error("Failed to fetch the websocket url", e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Request request = response.request();
+                LOGGER.debug("Fetched websocket url successfully");
+                String text = response.body().string();
+                JsonObject body = JsonParser.parseString(text).getAsJsonObject();
+                String url = body.getAsJsonObject("data").get("endpoint").getAsString();
+                LOGGER.debug("Websocket url: " + url);
+                websocketStart(url);
+            }
+        });
+    }
+
+    @Override
+    public boolean isStart() {
+        return started;
+    }
+
+    private void websocketStart(String url) {
+        LOGGER.debug("Starting websocket...");
+        this.webSocket = getClient().newWebSocket(new Request.Builder().get().url(url).build(), this.listener);
     }
 
     private static final class PacketListener extends WebSocketListener {
@@ -33,16 +83,22 @@ public class WebSocketReceiver extends Receiver {
         @Override
         public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
             LOGGER.debug("Connected successfully");
+            synchronized ((Object) receiver.started) {
+                receiver.started = true;
+            }
         }
 
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
-            // TODO
+            JsonObject object = JsonParser.parseString(text).getAsJsonObject();
+            if (object.get("type").getAsInt() != 0)
+                return;
+            receiver.solver.apply(object);
         }
 
         @Override
         public void onMessage(@NotNull WebSocket webSocket, @NotNull ByteString bytes) {
-            this.onMessage(webSocket, NetworkUtils.byteString2String(bytes));
+            this.onMessage(webSocket, new String(bytes.toByteArray()));
         }
 
         @Override
@@ -52,7 +108,7 @@ public class WebSocketReceiver extends Receiver {
 
         @Override
         public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable throwable, Response response) {
-            LOGGER.debug("Failed to connect to websocket");
+            LOGGER.debug("Failed to connect to websocket", throwable);
         }
 
     }
