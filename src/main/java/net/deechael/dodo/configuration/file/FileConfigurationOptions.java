@@ -5,7 +5,6 @@ import net.deechael.dodo.configuration.MemoryConfigurationOptions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,18 +98,6 @@ public class FileConfigurationOptions extends MemoryConfigurationOptions {
     }
 
     /**
-     * @param value The string header.
-     * @return This object, for chaining.
-     * @deprecated use setHeader() instead
-     */
-    @NotNull
-    @Deprecated
-    public FileConfigurationOptions header(@Nullable String value) {
-        this.header = (value == null) ? Collections.emptyList() : Collections.unmodifiableList(Arrays.asList(value.split("\\n")));
-        return this;
-    }
-
-    /**
      * Gets the footer that will be applied to the bottom of the saved output.
      * <p>
      * This footer will be commented out and applied directly at the bottom of
@@ -153,22 +140,22 @@ public class FileConfigurationOptions extends MemoryConfigurationOptions {
     }
 
     /**
-     * Gets whether or not comments should be loaded and saved.
+     * Gets whether comments should be loaded and saved.
      * <p>
      * Defaults to true.
      *
-     * @return Whether or not comments are parsed.
+     * @return Whether comments are parsed.
      */
     public boolean parseComments() {
         return parseComments;
     }
 
     /**
-     * Sets whether or not comments should be loaded and saved.
+     * Sets whether comments should be loaded and saved.
      * <p>
      * Defaults to true.
      *
-     * @param value Whether or not comments are parsed.
+     * @param value Whether comments are parsed.
      * @return This object, for chaining
      */
     @NotNull
@@ -178,7 +165,7 @@ public class FileConfigurationOptions extends MemoryConfigurationOptions {
     }
 
     /**
-     * @return Whether or not comments are parsed.
+     * @return Whether comments are parsed.
      * @deprecated Call {@link #parseComments()} instead.
      */
     @Deprecated
@@ -186,15 +173,4 @@ public class FileConfigurationOptions extends MemoryConfigurationOptions {
         return parseComments;
     }
 
-    /**
-     * @param value Should comments be parsed.
-     * @return This object, for chaining
-     * @deprecated Call {@link #parseComments(boolean)} instead.
-     */
-    @NotNull
-    @Deprecated
-    public FileConfigurationOptions copyHeader(boolean value) {
-        parseComments = value;
-        return this;
-    }
 }

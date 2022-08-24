@@ -47,14 +47,6 @@ public class YamlConfigurationOptions extends FileConfigurationOptions {
 
     @NotNull
     @Override
-    @Deprecated
-    public YamlConfigurationOptions header(@Nullable String value) {
-        super.header(value);
-        return this;
-    }
-
-    @NotNull
-    @Override
     public YamlConfigurationOptions setFooter(@Nullable List<String> value) {
         super.setFooter(value);
         return this;
@@ -67,16 +59,8 @@ public class YamlConfigurationOptions extends FileConfigurationOptions {
         return this;
     }
 
-    @NotNull
-    @Override
-    @Deprecated
-    public YamlConfigurationOptions copyHeader(boolean value) {
-        super.copyHeader(value);
-        return this;
-    }
-
     /**
-     * Gets how much spaces should be used to indent each line.
+     * Gets how many spaces should be used to indent each line.
      * <p>
      * The minimum value this may be is 2, and the maximum is 9.
      *
@@ -87,7 +71,7 @@ public class YamlConfigurationOptions extends FileConfigurationOptions {
     }
 
     /**
-     * Sets how much spaces should be used to indent each line.
+     * Sets how many spaces should be used to indent each line.
      * <p>
      * The minimum value this may be is 2, and the maximum is 9.
      *

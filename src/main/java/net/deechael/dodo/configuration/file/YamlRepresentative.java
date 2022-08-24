@@ -10,9 +10,9 @@ import org.yaml.snakeyaml.representer.Representer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class YamlRepresenter extends Representer {
+public class YamlRepresentative extends Representer {
 
-    public YamlRepresenter() {
+    public YamlRepresentative() {
         this.multiRepresenters.put(ConfigurationSection.class, new RepresentConfigurationSection());
         this.multiRepresenters.put(ConfigurationSerializable.class, new RepresentConfigurationSerializable());
         // SPIGOT-6234: We could just switch YamlConstructor to extend Constructor rather than SafeConstructor, however there is a very small risk of issues with plugins treating config as untrusted input
@@ -36,7 +36,7 @@ public class YamlRepresenter extends Representer {
         @Override
         public Node representData(@NotNull Object data) {
             ConfigurationSerializable serializable = (ConfigurationSerializable) data;
-            Map<String, Object> values = new LinkedHashMap<String, Object>();
+            Map<String, Object> values = new LinkedHashMap<>();
             values.put(ConfigurationSerialization.SERIALIZED_TYPE_KEY, ConfigurationSerialization.getAlias(serializable.getClass()));
             values.putAll(serializable.serialize());
 

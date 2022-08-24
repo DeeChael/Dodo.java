@@ -76,7 +76,7 @@ public class Route {
 
     // Dodo's requests must use POST
     public String getMethod() {
-        return "POST";
+        return method;
     }
 
     public String getRoute() {

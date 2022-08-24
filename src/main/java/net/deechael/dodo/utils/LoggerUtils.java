@@ -24,7 +24,7 @@ public final class LoggerUtils {
         encoder.setPattern("[%date] [%logger{32}] [%thread] [%level] %message%n");
         encoder.start();
 
-        ConsoleAppender<ILoggingEvent> appender = new ConsoleAppender<ILoggingEvent>();
+        ConsoleAppender<ILoggingEvent> appender = new ConsoleAppender<>();
         appender.setContext(loggerContext);
         appender.setEncoder(encoder);
         appender.start();

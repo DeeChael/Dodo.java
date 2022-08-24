@@ -9,6 +9,16 @@ import java.util.Map;
  * Represents a source of configurable options and settings
  */
 public interface Configuration extends ConfigurationSection {
+    @Override
+    default boolean isInt(@NotNull String path) {
+        return false;
+    }
+
+    @Override
+    default boolean getBoolean(@NotNull String path, boolean def) {
+        return false;
+    }
+
     /**
      * Sets the default value of the given path as provided.
      * <p>

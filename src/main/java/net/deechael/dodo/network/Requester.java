@@ -62,7 +62,7 @@ public class Requester {
             Response response = call.execute();
             if (!response.isSuccessful())
                 LOGGER.error("Failed to execute: " + route.getRoute(), new RuntimeException("Code: " + response.code()));
-            JsonObject object = JsonParser.parseString(response.body().string()).getAsJsonObject();
+            JsonObject object = JsonParser.parseString(Objects.requireNonNull(response.body()).string()).getAsJsonObject();
             if (object.get("status").getAsInt() != 0)
                 LOGGER.error("Dodo error when executing " + route.getRoute(), new RuntimeException(object.get("message").getAsString()));
             return object;
@@ -97,7 +97,7 @@ public class Requester {
                     future.cancel(true);
                     LOGGER.error("Failed to execute: " + route.getRoute(), new RuntimeException("Code: " + response.code()));
                 }
-                JsonObject object = JsonParser.parseString(response.body().string()).getAsJsonObject();
+                JsonObject object = JsonParser.parseString(Objects.requireNonNull(response.body()).string()).getAsJsonObject();
                 if (object.get("status").getAsInt() != 0) {
                     future.cancel(true);
                     LOGGER.error("Dodo error when executing " + route.getRoute(), new RuntimeException(object.get("message").getAsString()));

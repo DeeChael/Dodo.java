@@ -42,8 +42,7 @@ public interface Message {
             String url = object.get("url").getAsString();
             String name = object.get("name").getAsString();
             long size = object.get("size").getAsLong();
-            FileMessage message = new FileMessage(url, name, size);
-            return message;
+            return new FileMessage(url, name, size);
         } else if (type == MessageType.CARD) {
             // TODO
         }

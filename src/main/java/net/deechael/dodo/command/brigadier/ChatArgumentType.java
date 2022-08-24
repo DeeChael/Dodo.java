@@ -3,7 +3,6 @@ package net.deechael.dodo.command.brigadier;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.deechael.dodo.content.TextMessage;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ public class ChatArgumentType implements ArgumentType<TextMessage> {
     }
 
     @Override
-    public TextMessage parse(StringReader reader) throws CommandSyntaxException {
+    public TextMessage parse(StringReader reader) {
         TextMessage message = new TextMessage(reader.getString().substring(reader.getCursor(), reader.getTotalLength()));
         reader.setCursor(reader.getTotalLength());
         return message;

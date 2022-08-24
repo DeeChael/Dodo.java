@@ -22,10 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ClientImpl implements Client {
 
-    private final int clientId;
-    private final String token;
-
-    private final OkHttpClient client;
     private final Gateway gateway;
 
     private final EventManager eventManager;
@@ -34,11 +30,9 @@ public class ClientImpl implements Client {
     private boolean started = false;
 
     public ClientImpl(int clientId, String token) {
-        this.clientId = clientId;
-        this.token = token;
-        this.client = new OkHttpClient.Builder().pingInterval(30, TimeUnit.SECONDS).build();
-        this.gateway = new Gateway(new Requester(this.client, this.clientId, this.token),
-                new WebSocketReceiver(this.client, this.clientId, this.token, this::pkgReceive));
+        OkHttpClient client = new OkHttpClient.Builder().pingInterval(30, TimeUnit.SECONDS).build();
+        this.gateway = new Gateway(new Requester(client, clientId, token),
+                new WebSocketReceiver(client, clientId, token, this::pkgReceive));
         this.eventManager = new EventManager(this);
         this.commandManager = new CommandManager();
     }
@@ -120,7 +114,7 @@ public class ClientImpl implements Client {
         if (Objects.equals(data.get("eventType").getAsString(), "2001")) {
             if (data.getAsJsonObject("eventBody").get("messageType").getAsInt() == 1) {
                 try {
-                    long timestamp = getLong(data, "timestamp");
+                    long timestamp = data.get("timestamp").getAsLong();
                     JsonObject eventJson = data.getAsJsonObject("eventBody");
                     String islandId = string(eventJson, "islandId");
                     String channelId = string(eventJson, "channelId");
@@ -128,12 +122,14 @@ public class ClientImpl implements Client {
                     String messageId = string(eventJson, "messageId");
                     Member member = this.fetchMember(islandId, dodoId);
 
-                    MessageType type = MessageType.of(integer(eventJson, "messageType"));
+                    MessageType type = MessageType.of(eventJson.get("messageType").getAsInt());
                     Message body = Message.parse(type, eventJson.getAsJsonObject("messageBody"));
 
                     MessageContext context = new MessageContextImpl(timestamp, messageId, body,
                             member, this.fetchChannel(islandId, channelId), this.fetchIsland(islandId));
-                    commandManager.execute(context, ((TextMessage) body).getContent());
+                    if (body != null) {
+                        commandManager.execute(context, ((TextMessage) body).getContent());
+                    }
                 } catch (Exception ignored) {
                     // To prevent the event won't be fired
                 }
@@ -145,14 +141,5 @@ public class ClientImpl implements Client {
     private String string(JsonObject object, String key) {
         return object.get(key).getAsString();
     }
-
-    private int integer(JsonObject object, String key) {
-        return object.get(key).getAsInt();
-    }
-
-    private long getLong(JsonObject object, String key) {
-        return object.get(key).getAsLong();
-    }
-
 
 }

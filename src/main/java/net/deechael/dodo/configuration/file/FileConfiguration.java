@@ -56,12 +56,8 @@ public abstract class FileConfiguration extends MemoryConfiguration {
 
         String data = saveToString();
 
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
-
-        try {
+        try (Writer writer = new OutputStreamWriter(java.nio.file.Files.newOutputStream(file.toPath()), Charsets.UTF_8)) {
             writer.write(data);
-        } finally {
-            writer.close();
         }
     }
 
@@ -192,18 +188,6 @@ public abstract class FileConfiguration extends MemoryConfiguration {
      * @throws IllegalArgumentException      Thrown if contents is null.
      */
     public abstract void loadFromString(@NotNull String contents) throws InvalidConfigurationException;
-
-    /**
-     * @return empty string
-     * @deprecated This method only exists for backwards compatibility. It will
-     * do nothing and should not be used! Please use
-     * {@link FileConfigurationOptions#getHeader()} instead.
-     */
-    @NotNull
-    @Deprecated
-    protected String buildHeader() {
-        return "";
-    }
 
     @NotNull
     @Override

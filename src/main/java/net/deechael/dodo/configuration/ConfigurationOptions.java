@@ -66,7 +66,7 @@ public class ConfigurationOptions {
      * ConfigurationSection#isSet(String)}. The default value is
      * false.
      *
-     * @return Whether or not defaults are directly copied
+     * @return Whether defaults are directly copied
      */
     public boolean copyDefaults() {
         return copyDefaults;
@@ -84,7 +84,7 @@ public class ConfigurationOptions {
      * ConfigurationSection#isSet(String)}. The default value is
      * false.
      *
-     * @param value Whether or not defaults are directly copied
+     * @param value Whether defaults are directly copied
      * @return This object, for chaining
      */
     @NotNull

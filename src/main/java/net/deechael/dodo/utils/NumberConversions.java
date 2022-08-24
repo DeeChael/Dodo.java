@@ -3,6 +3,8 @@ package net.deechael.dodo.utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public final class NumberConversions {
 
     private NumberConversions() {
@@ -32,7 +34,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Integer.parseInt(object.toString());
+            return Integer.parseInt(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
@@ -44,7 +46,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Float.parseFloat(object.toString());
+            return Float.parseFloat(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
@@ -56,7 +58,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Double.parseDouble(object.toString());
+            return Double.parseDouble(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
@@ -68,7 +70,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Long.parseLong(object.toString());
+            return Long.parseLong(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
@@ -80,7 +82,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Short.parseShort(object.toString());
+            return Short.parseShort(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;
@@ -92,7 +94,7 @@ public final class NumberConversions {
         }
 
         try {
-            return Byte.parseByte(object.toString());
+            return Byte.parseByte(Objects.requireNonNull(object).toString());
         } catch (NumberFormatException | NullPointerException ignored) {
         }
         return 0;

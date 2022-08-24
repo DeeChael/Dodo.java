@@ -13,13 +13,13 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class WebSocketReceiver extends Receiver {
 
     private final static Logger LOGGER = LoggerUtils.getLogger(WebSocketReceiver.class, Level.DEBUG);
 
     private final PacketListener listener = new PacketListener(this);
-    private WebSocket webSocket;
 
     private final Parameter<JsonObject> solver;
 
@@ -51,10 +51,8 @@ public class WebSocketReceiver extends Receiver {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Request request = response.request();
                 LOGGER.debug("Fetched websocket url successfully");
-                String text = response.body().string();
-                JsonObject body = JsonParser.parseString(text).getAsJsonObject();
+                JsonObject body = JsonParser.parseString(Objects.requireNonNull(response.body()).string()).getAsJsonObject();
                 String url = body.getAsJsonObject("data").get("endpoint").getAsString();
                 LOGGER.debug("Websocket url: " + url);
                 websocketStart(url);
@@ -69,7 +67,7 @@ public class WebSocketReceiver extends Receiver {
 
     private void websocketStart(String url) {
         LOGGER.debug("Starting websocket...");
-        this.webSocket = getClient().newWebSocket(new Request.Builder().get().url(url).build(), this.listener);
+        WebSocket webSocket = getClient().newWebSocket(new Request.Builder().get().url(url).build(), this.listener);
     }
 
     private static final class PacketListener extends WebSocketListener {

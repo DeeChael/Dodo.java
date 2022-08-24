@@ -14,7 +14,7 @@ public final class DodoCommand {
 
     private final CommandExecutor executor;
 
-    private final ExceptionExecutor exceptionExecutor = null;
+    private ExceptionExecutor exceptionExecutor = null;
 
     private String regex = null;
 
@@ -77,6 +77,11 @@ public final class DodoCommand {
     public DodoCommand setPrefixes(Collection<String> prefixes) {
         this.prefixes.clear();
         this.prefixes.addAll(prefixes);
+        return this;
+    }
+
+    public DodoCommand setExceptionExecutor(ExceptionExecutor exceptionExecutor) {
+        this.exceptionExecutor = exceptionExecutor;
         return this;
     }
 

@@ -40,20 +40,20 @@ public class YamlConfiguration extends FileConfiguration {
     private final DumperOptions yamlDumperOptions;
     private final LoaderOptions yamlLoaderOptions;
     private final YamlConstructor constructor;
-    private final YamlRepresenter representer;
+    private final YamlRepresentative representative;
     private final Yaml yaml;
 
     public YamlConfiguration() {
         constructor = new YamlConstructor();
-        representer = new YamlRepresenter();
-        representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        representative = new YamlRepresentative();
+        representative.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
         yamlDumperOptions = new DumperOptions();
         yamlDumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         yamlLoaderOptions = new LoaderOptions();
         yamlLoaderOptions.setMaxAliasesForCollections(Integer.MAX_VALUE); // SPIGOT-5881: Not ideal, but was default pre SnakeYAML 1.26
 
-        yaml = new DodoYaml(constructor, representer, yamlDumperOptions, yamlLoaderOptions);
+        yaml = new DodoYaml(constructor, representative, yamlDumperOptions, yamlLoaderOptions);
     }
 
     /**
@@ -222,12 +222,12 @@ public class YamlConfiguration extends FileConfiguration {
     private MappingNode toNodeTree(@NotNull ConfigurationSection section) {
         List<NodeTuple> nodeTuples = new ArrayList<>();
         for (Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
-            Node key = representer.represent(entry.getKey());
+            Node key = representative.represent(entry.getKey());
             Node value;
             if (entry.getValue() instanceof ConfigurationSection) {
                 value = toNodeTree((ConfigurationSection) entry.getValue());
             } else {
-                value = representer.represent(entry.getValue());
+                value = representative.represent(entry.getValue());
             }
             key.setBlockComments(getCommentLines(section.getComments(entry.getKey()), CommentType.BLOCK));
             if (value instanceof MappingNode || value instanceof SequenceNode) {
@@ -259,7 +259,7 @@ public class YamlConfiguration extends FileConfiguration {
     }
 
     private List<CommentLine> getCommentLines(List<String> comments, CommentType commentType) {
-        List<CommentLine> lines = new ArrayList<CommentLine>();
+        List<CommentLine> lines = new ArrayList<>();
         for (String comment : comments) {
             if (comment == null) {
                 lines.add(new CommentLine(null, null, "", CommentType.BLANK_LINE));
