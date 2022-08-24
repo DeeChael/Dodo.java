@@ -760,7 +760,7 @@ public class MemorySection implements ConfigurationSection {
     public <T extends Object> T getObject(@NotNull String path, @NotNull Class<T> clazz) {
         Validate.notNull(clazz, "Class cannot be null");
         Object def = getDefault(path);
-        return getObject(path, clazz, (def != null && clazz.isInstance(def)) ? clazz.cast(def) : null);
+        return getObject(path, clazz, (clazz.isInstance(def)) ? clazz.cast(def) : null);
     }
 
     @Contract("_, _, !null -> !null")
@@ -769,7 +769,7 @@ public class MemorySection implements ConfigurationSection {
     public <T extends Object> T getObject(@NotNull String path, @NotNull Class<T> clazz, @Nullable T def) {
         Validate.notNull(clazz, "Class cannot be null");
         Object val = get(path, def);
-        return (val != null && clazz.isInstance(val)) ? clazz.cast(val) : def;
+        return (clazz.isInstance(val)) ? clazz.cast(val) : def;
     }
 
     @Nullable
@@ -931,13 +931,11 @@ public class MemorySection implements ConfigurationSection {
     @Override
     public String toString() {
         Configuration root = getRoot();
-        return new StringBuilder()
-                .append(getClass().getSimpleName())
-                .append("[path='")
-                .append(getCurrentPath())
-                .append("', root='")
-                .append(root == null ? null : root.getClass().getSimpleName())
-                .append("']")
-                .toString();
+        return getClass().getSimpleName() +
+                "[path='" +
+                getCurrentPath() +
+                "', root='" +
+                (root == null ? null : root.getClass().getSimpleName()) +
+                "']";
     }
 }

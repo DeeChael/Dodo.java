@@ -12,17 +12,17 @@ public class RoleImpl implements Role {
     private final Gateway gateway;
 
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String id;
+    private final String id;
     @Getter
-    private String name;
+    private final String name;
     @Getter
-    private String color;
+    private final String color;
     @Getter
-    private int position;
+    private final int position;
     @Getter
-    private String permission;
+    private final String permission;
 
     public RoleImpl(Gateway gateway, JsonObject info) {
         this.gateway = gateway;

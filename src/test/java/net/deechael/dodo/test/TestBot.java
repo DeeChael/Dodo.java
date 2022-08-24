@@ -42,12 +42,14 @@ public class TestBot implements Listener /* 继承监听器 */{
         // 注册事件监听器
         bot.addEventListener(new TestBot());
         // 添加任务，会在成功连接websocket以后运行
+        /*
         bot.runAfter(() -> {
             // 将本地图片“test.png”上传至渡渡的服务器
             String url = bot.getClient().uploadImage(new File("test.png"));
             // 输出图片的url
             System.out.println(url);
         });
+         */
         // 启动机器人
         bot.start();
     }

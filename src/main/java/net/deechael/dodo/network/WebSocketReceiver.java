@@ -1,27 +1,27 @@
 package net.deechael.dodo.network;
 
+import ch.qos.logback.classic.Level;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.NonNull;
 import net.deechael.dodo.API;
-import net.deechael.dodo.utils.NetworkUtils;
+import net.deechael.dodo.utils.LoggerUtils;
 import net.deechael.useless.function.parameters.Parameter;
 import okhttp3.*;
 import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class WebSocketReceiver extends Receiver {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(WebSocketReceiver.class);
+    private final static Logger LOGGER = LoggerUtils.getLogger(WebSocketReceiver.class, Level.DEBUG);
 
-    private PacketListener listener = new PacketListener(this);
+    private final PacketListener listener = new PacketListener(this);
     private WebSocket webSocket;
 
-    private Parameter<JsonObject> solver;
+    private final Parameter<JsonObject> solver;
 
     private boolean started = false;
     private boolean triedToStart = false;

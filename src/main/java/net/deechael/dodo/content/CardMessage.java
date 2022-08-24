@@ -2,7 +2,6 @@ package net.deechael.dodo.content;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.deechael.dodo.content.Message;
 import net.deechael.dodo.content.card.Card;
 import net.deechael.dodo.types.MessageType;
 

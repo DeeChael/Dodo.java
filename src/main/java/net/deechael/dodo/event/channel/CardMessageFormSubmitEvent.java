@@ -13,17 +13,17 @@ import java.util.Map;
 public class CardMessageFormSubmitEvent extends Event {
 
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String channelId;
+    private final String channelId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private String interactCustomId;
+    private final String interactCustomId;
     private final Map<String, Object> formData = new HashMap<>();
 
     public CardMessageFormSubmitEvent(String id, long timestamp, String islandId, String channelId,

@@ -11,21 +11,21 @@ import net.deechael.dodo.types.UserSexType;
 public class PersonalMessageEvent extends Event {
 
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String nickname;
+    private final String nickname;
     @Getter
-    private String avatarUrl;
+    private final String avatarUrl;
     @Getter
-    private UserSexType sex;
+    private final UserSexType sex;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
     private Member member;
     @Getter
-    private MessageType messageType;
+    private final MessageType messageType;
     @Getter
-    private Message body;
+    private final Message body;
 
     public PersonalMessageEvent(String id,
                                 long timestamp,

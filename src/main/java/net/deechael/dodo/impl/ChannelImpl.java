@@ -13,18 +13,18 @@ public class ChannelImpl implements Channel {
     protected final Gateway gateway;
 
     @Getter
-    private String id;
+    private final String id;
     @Getter
-    private String name;
+    private final String name;
     @Getter
-    private ChannelType type;
+    private final ChannelType type;
     @Getter
-    private String islandId;
-    private boolean isDefault;
+    private final String islandId;
+    private final boolean isDefault;
     @Getter
-    private String groupId;
+    private final String groupId;
     @Getter
-    private String groupName;
+    private final String groupName;
 
     public ChannelImpl(Gateway gateway, JsonObject info) {
         this.gateway = gateway;

@@ -8,21 +8,21 @@ import net.deechael.dodo.types.EventType;
 public class MessageReactionEvent extends Event {
 
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String channelId;
+    private final String channelId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private String targetId;
+    private final String targetId;
     @Getter
-    private String emojiId;
+    private final String emojiId;
     @Getter
-    private ReactionType reactionType;
+    private final ReactionType reactionType;
 
     public MessageReactionEvent(String id, long timestamp, String islandId, String channelId,
                                 String dodoId, String messageId, Member member, String targetId,
@@ -38,9 +38,9 @@ public class MessageReactionEvent extends Event {
         this.reactionType = type;
     }
 
-    public static enum ReactionType {
+    public enum ReactionType {
 
-        ADD, REMOVE;
+        ADD, REMOVE
 
     }
 

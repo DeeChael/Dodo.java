@@ -19,14 +19,14 @@ import net.deechael.dodo.types.UserSexType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class EventManager {
 
-    private Client client;
+    private final Client client;
 
     private final Map<Class<?>, List<Entry<Method, Object>>> handlers = new HashMap<>();
 

@@ -6,11 +6,11 @@ import net.deechael.dodo.types.EventType;
 public abstract class Event {
 
     @Getter
-    private String id;
+    private final String id;
     @Getter
-    private EventType type;
+    private final EventType type;
     @Getter
-    private long timestamp;
+    private final long timestamp;
 
     public Event(String id, EventType type, long timestamp) {
         this.id = id;

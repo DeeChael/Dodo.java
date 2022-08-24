@@ -22,27 +22,27 @@ public class MemberImpl implements Member {
     private final Gateway gateway;
 
     @Getter
-    private String id;
+    private final String id;
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String nickname;
+    private final String nickname;
     @Getter
-    private String personalNickname;
+    private final String personalNickname;
     @Getter
-    private String avatarUrl;
+    private final String avatarUrl;
     @Getter
-    private String joinTime;
+    private final String joinTime;
     @Getter
-    private UserSexType sex;
+    private final UserSexType sex;
     @Getter
-    private int level;
+    private final int level;
     @Getter
-    private boolean bot;
+    private final boolean bot;
     @Getter
-    private UserOnlineDeviceType onlineDevice;
+    private final UserOnlineDeviceType onlineDevice;
     @Getter
-    private UserOnlineStatusType onlineStatus;
+    private final UserOnlineStatusType onlineStatus;
 
     public MemberImpl(Gateway gateway, JsonObject info) {
         this.gateway = gateway;

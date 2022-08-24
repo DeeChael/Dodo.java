@@ -8,17 +8,17 @@ import net.deechael.dodo.types.EventType;
 public class MemberLeaveEvent extends Event {
 
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private LeaveType leaveType;
+    private final LeaveType leaveType;
     @Getter
-    private String operator;
+    private final String operator;
     @Getter
-    private String modifyTime;
+    private final String modifyTime;
 
     public MemberLeaveEvent(String id,
                             long timestamp,
@@ -37,8 +37,8 @@ public class MemberLeaveEvent extends Event {
         this.modifyTime = modifyTime;
     }
 
-    public static enum LeaveType {
-        SELF, KICKED;
+    public enum LeaveType {
+        SELF, KICKED
     }
 
 }

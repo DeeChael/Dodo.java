@@ -7,17 +7,17 @@ import net.deechael.dodo.content.Message;
 public class MessageContextImpl implements MessageContext {
 
     @Getter
-    private long timestamp;
+    private final long timestamp;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
-    private Message content;
+    private final Message content;
     @Getter
-    private Member author;
+    private final Member author;
     @Getter
-    private Channel channel;
+    private final Channel channel;
     @Getter
-    private Island island;
+    private final Island island;
 
 
     public MessageContextImpl(long timestamp,
@@ -26,7 +26,7 @@ public class MessageContextImpl implements MessageContext {
                               Member author,
                               Channel channel,
                               Island island
-                              ) {
+    ) {
         this.timestamp = timestamp;
         this.messageId = messageId;
         this.content = content;

@@ -16,7 +16,7 @@ public final class DodoCommand {
 
     private String regex = null;
 
-    private boolean mergeRest = false;
+    private final boolean mergeRest = false;
 
     public DodoCommand(String name) {
         this.name = name;

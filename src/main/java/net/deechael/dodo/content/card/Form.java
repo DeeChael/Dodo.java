@@ -81,7 +81,7 @@ public class Form {
 
     }
 
-    public static interface Element {
+    public interface Element {
 
         JsonObject get();
 

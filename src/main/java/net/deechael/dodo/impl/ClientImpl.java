@@ -1,7 +1,6 @@
 package net.deechael.dodo.impl;
 
 import com.google.gson.JsonObject;
-import lombok.Getter;
 import net.deechael.dodo.API;
 import net.deechael.dodo.api.Channel;
 import net.deechael.dodo.api.Client;
@@ -11,7 +10,6 @@ import net.deechael.dodo.content.Message;
 import net.deechael.dodo.event.EventManager;
 import net.deechael.dodo.event.Listener;
 import net.deechael.dodo.gate.Gateway;
-import net.deechael.dodo.network.Receiver;
 import net.deechael.dodo.network.Requester;
 import net.deechael.dodo.network.Route;
 import net.deechael.dodo.network.WebSocketReceiver;

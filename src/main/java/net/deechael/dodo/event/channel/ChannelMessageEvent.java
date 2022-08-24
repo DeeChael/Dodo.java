@@ -12,23 +12,23 @@ import net.deechael.dodo.types.MessageType;
 public final class ChannelMessageEvent extends Event {
 
     @Getter
-    private MessageContext context;
+    private final MessageContext context;
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String channelId;
+    private final String channelId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private Reference reference;
+    private final Reference reference;
     @Getter
-    private MessageType messageType;
+    private final MessageType messageType;
     @Getter
-    private Message body;
+    private final Message body;
 
     public ChannelMessageEvent(String id, long timestamp, MessageContext context, String islandId, String channelId,
                                String dodoId, String messageId, Member member, Reference reference,

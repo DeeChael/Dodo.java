@@ -16,8 +16,7 @@ public enum EventType {
     // Personal Message Events
     PERSONAL_MESSAGE(1001),
     // Unknown
-    UNKNOWN(-1)
-    ;
+    UNKNOWN(-1);
 
     @Getter
     private final int id;

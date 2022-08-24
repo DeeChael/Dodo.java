@@ -1,6 +1,7 @@
 package net.deechael.dodo.event.channel;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import lombok.Getter;
 import net.deechael.dodo.api.Member;
 import net.deechael.dodo.event.Event;
@@ -12,17 +13,17 @@ import java.util.List;
 public class CardMessageListSubmitEvent extends Event {
 
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String channelId;
+    private final String channelId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String messageId;
+    private final String messageId;
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private String interactCustomId;
+    private final String interactCustomId;
     private final List<String> listData = new ArrayList<>();
 
     public CardMessageListSubmitEvent(String id, long timestamp, String islandId, String channelId,

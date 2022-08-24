@@ -22,6 +22,7 @@ public final class NetworkUtils {
         return new String(ByteBuffer.wrap(outputStream.toByteArray()).array(), StandardCharsets.UTF_8);
     }
 
-    private NetworkUtils() {}
+    private NetworkUtils() {
+    }
 
 }

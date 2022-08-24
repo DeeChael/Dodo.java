@@ -1,18 +1,16 @@
 package net.deechael.dodo.network;
 
-import com.google.common.util.concurrent.Futures;
+import ch.qos.logback.classic.Level;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
 import net.deechael.dodo.API;
+import net.deechael.dodo.utils.LoggerUtils;
 import okhttp3.*;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -24,7 +22,7 @@ import java.util.concurrent.TimeoutException;
 public class Requester {
 
     private final Gson gson = new Gson();
-    private final static Logger LOGGER = LoggerFactory.getLogger(Requester.class);
+    private final static Logger LOGGER = LoggerUtils.getLogger(Requester.class, Level.DEBUG);
 
     @Getter
     private final OkHttpClient client;

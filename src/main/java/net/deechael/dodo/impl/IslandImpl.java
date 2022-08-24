@@ -19,21 +19,21 @@ public class IslandImpl implements Island {
     private final Gateway gateway;
 
     @Getter
-    private String id;
+    private final String id;
     @Getter
-    private String name;
+    private final String name;
     @Getter
-    private String coverUrl;
+    private final String coverUrl;
     @Getter
-    private int memberCount;
+    private final int memberCount;
     @Getter
-    private int onlineMemberCount;
+    private final int onlineMemberCount;
     @Getter
-    private String description;
+    private final String description;
     @Getter
-    private String defaultChannelId;
+    private final String defaultChannelId;
     @Getter
-    private String systemChannelId;
+    private final String systemChannelId;
 
     public IslandImpl(Gateway gateway, JsonObject info) {
         this.gateway = gateway;

@@ -8,13 +8,13 @@ import net.deechael.dodo.types.EventType;
 public class MemberJoinEvent extends Event {
 
     @Getter
-    private Member member;
+    private final Member member;
     @Getter
-    private String islandId;
+    private final String islandId;
     @Getter
-    private String dodoId;
+    private final String dodoId;
     @Getter
-    private String modifyTime;
+    private final String modifyTime;
 
     public MemberJoinEvent(String id, long timestamp, Member member, String islandId, String dodoId, String modifyTime) {
         super(id, EventType.MEMBER_JOIN, timestamp);
