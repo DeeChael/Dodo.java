@@ -3,18 +3,22 @@ package net.deechael.dodo.content.card;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.deechael.dodo.types.card.CountdownStyleType;
 
 public class Countdown implements Component {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String title = null;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private CountdownStyleType style;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private long endTime;
 
     public Countdown(CountdownStyleType style, long endTime) {

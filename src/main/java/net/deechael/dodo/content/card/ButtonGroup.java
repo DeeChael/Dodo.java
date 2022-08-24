@@ -10,8 +10,9 @@ public class ButtonGroup implements Component {
 
     private final List<Button> elements = new ArrayList<>();
 
-    public void append(Button button) {
+    public ButtonGroup append(Button button) {
         this.elements.add(button);
+        return this;
     }
 
     @Override

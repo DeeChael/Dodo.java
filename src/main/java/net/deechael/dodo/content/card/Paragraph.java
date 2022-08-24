@@ -3,6 +3,8 @@ package net.deechael.dodo.content.card;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,9 @@ import java.util.List;
 public class Paragraph implements Element {
 
     @Getter
-    private final int cols;
+    @Setter
+    @Accessors(fluent = true)
+    private int cols;
     private final List<Text> fields = new ArrayList<>();
 
     public Paragraph(int cols) {
@@ -19,8 +23,9 @@ public class Paragraph implements Element {
         this.cols = cols;
     }
 
-    public void append(Text text) {
+    public Paragraph append(Text text) {
         this.fields.add(text);
+        return this;
     }
 
     @Override

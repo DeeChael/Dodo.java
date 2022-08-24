@@ -55,6 +55,11 @@ public class DodoBot implements Bot {
     }
 
     @Override
+    public void unregisterEventListener(Listener listener) {
+        this.client.unregisterEventListener(listener);
+    }
+
+    @Override
     public void registerCommand(DodoCommand command) {
         this.client.registerCommand(command);
     }

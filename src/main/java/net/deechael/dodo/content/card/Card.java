@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.deechael.dodo.types.card.CardThemeType;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ public class Card {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private CardThemeType theme = CardThemeType.DEFAULT;
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String title = "";
 
     private final List<Component> components = new ArrayList<>();
@@ -24,8 +27,9 @@ public class Card {
     public Card() {
     }
 
-    public void append(Component component) {
+    public Card append(Component component) {
         this.components.add(component);
+        return this;
     }
 
     public JsonObject get() {

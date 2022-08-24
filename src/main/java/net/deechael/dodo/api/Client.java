@@ -14,6 +14,8 @@ public interface Client {
 
     void addEventListener(Listener listener);
 
+    void unregisterEventListener(Listener listener);
+
     void registerCommand(DodoCommand command);
 
     Island fetchIsland(String islandId);

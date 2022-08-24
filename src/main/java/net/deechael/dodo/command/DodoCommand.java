@@ -14,7 +14,7 @@ public final class DodoCommand {
 
     private final CommandExecutor executor;
 
-    private ExceptionExecutor exceptionExecutor = null;
+    private final ExceptionExecutor exceptionExecutor = null;
 
     private String regex = null;
 

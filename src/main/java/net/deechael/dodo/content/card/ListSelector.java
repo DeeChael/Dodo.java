@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +14,20 @@ public class ListSelector implements Component {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String interactCustomId = null;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String placeholder = null;
     private final List<Element> elements = new ArrayList<>();
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private int min;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private int max;
 
     public ListSelector(int min, int max) {
@@ -58,18 +63,25 @@ public class ListSelector implements Component {
 
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private String name;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private String desc = null;
 
         public Element(String name) {
             this.name = name;
         }
 
+        public Element(String name, String desc) {
+            this.name = name;
+            this.desc = desc;
+        }
+
         public JsonObject get() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("name", "name");
+            jsonObject.addProperty("name", name);
             if (desc != null) {
                 jsonObject.addProperty("desc", desc);
             }

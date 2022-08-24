@@ -3,17 +3,21 @@ package net.deechael.dodo.content.card;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 public class Video implements Component {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String title = null;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String cover;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String src;
 
     public Video(String cover, String src) {

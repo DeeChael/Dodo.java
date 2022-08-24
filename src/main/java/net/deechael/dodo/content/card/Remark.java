@@ -10,12 +10,14 @@ public class Remark implements Component {
 
     private final List<Element> elements = new ArrayList<>();
 
-    public void append(Text text) {
+    public Remark append(Text text) {
         this.elements.add(text);
+        return this;
     }
 
-    public void append(Image image) {
+    public Remark append(Image image) {
         this.elements.add(image);
+        return this;
     }
 
     @Override

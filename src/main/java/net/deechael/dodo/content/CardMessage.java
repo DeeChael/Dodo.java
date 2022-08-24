@@ -33,7 +33,7 @@ public class CardMessage implements Message {
             object.addProperty("content", content);
         }
         object.add("card", this.card.get());
-        return null;
+        return object;
     }
 
     @Override

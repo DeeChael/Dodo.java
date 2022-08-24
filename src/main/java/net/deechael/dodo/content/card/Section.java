@@ -3,15 +3,18 @@ package net.deechael.dodo.content.card;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.deechael.dodo.types.card.SectionAlignType;
 
 public class Section implements Component {
 
     @Getter
-    private final Element text;
+    private Element text;
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private SectionAlignType align = null;
+    @Getter
     private Element accessory = null;
 
     public Section(String plain) {
@@ -26,12 +29,29 @@ public class Section implements Component {
         this.text = paragraph;
     }
 
-    public void setAccessory(Image accessory) {
-        this.accessory = accessory;
+    public Section setText(String plain) {
+        this.text = new Text(plain);
+        return this;
     }
 
-    public void setAccessory(Button accessory) {
+    public Section setText(Text text) {
+        this.text = text;
+        return this;
+    }
+
+    public Section setText(Paragraph text) {
+        this.text = text;
+        return this;
+    }
+
+    public Section setAccessory(Image accessory) {
         this.accessory = accessory;
+        return this;
+    }
+
+    public Section setAccessory(Button accessory) {
+        this.accessory = accessory;
+        return this;
     }
 
     @Override

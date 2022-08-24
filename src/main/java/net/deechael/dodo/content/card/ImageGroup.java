@@ -10,8 +10,9 @@ public class ImageGroup implements Component {
 
     private final List<Image> elements = new ArrayList<>();
 
-    public void append(Image image) {
+    public ImageGroup append(Image image) {
         this.elements.add(image);
+        return this;
     }
 
     @Override

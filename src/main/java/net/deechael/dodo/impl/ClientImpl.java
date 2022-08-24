@@ -9,7 +9,6 @@ import net.deechael.dodo.content.Message;
 import net.deechael.dodo.content.TextMessage;
 import net.deechael.dodo.event.EventManager;
 import net.deechael.dodo.event.Listener;
-import net.deechael.dodo.event.channel.ChannelMessageEvent;
 import net.deechael.dodo.gate.Gateway;
 import net.deechael.dodo.network.Requester;
 import net.deechael.dodo.network.Route;
@@ -60,6 +59,11 @@ public class ClientImpl implements Client {
     @Override
     public void addEventListener(Listener listener) {
         this.eventManager.addListener(listener);
+    }
+
+    @Override
+    public void unregisterEventListener(Listener listener) {
+        this.eventManager.unregisterListener(listener);
     }
 
     @Override
@@ -137,6 +141,7 @@ public class ClientImpl implements Client {
         }
         this.eventManager.callEvent(data);
     }
+
     private String string(JsonObject object, String key) {
         return object.get(key).getAsString();
     }

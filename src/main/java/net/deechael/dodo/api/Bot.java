@@ -11,6 +11,8 @@ public interface Bot {
 
     void addEventListener(Listener listener);
 
+    void unregisterEventListener(Listener listener);
+
     void registerCommand(DodoCommand command);
 
     Client getClient();

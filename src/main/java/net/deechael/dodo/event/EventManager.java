@@ -76,7 +76,6 @@ public class EventManager {
         String eventType = string(eventJson, "eventType");
         long timestamp = getLong(eventJson, "timestamp");
         eventJson = eventJson.getAsJsonObject("eventBody");
-
         if (Objects.equals(eventType, "2001")) {
             if (!handlers.containsKey(ChannelMessageEvent.class))
                 return;
@@ -121,7 +120,7 @@ public class EventManager {
             String dodoId = string(eventJson, "dodoId");
             String messageId = string(eventJson, "messageId");
             Member member = client.fetchMember(islandId, dodoId);
-            String interactCustomId = string(eventJson.getAsJsonObject("interactCustomId"), "id");
+            String interactCustomId = eventJson.has("interactCustomId") ? string(eventJson, "interactCustomId") : "";
             String value = string(eventJson.getAsJsonObject("value"), "id");
             CardMessageButtonClickEvent event = new CardMessageButtonClickEvent(id, timestamp, islandId, channelId,
                     dodoId, messageId, member, interactCustomId, value);
@@ -134,7 +133,7 @@ public class EventManager {
             String dodoId = string(eventJson, "dodoId");
             String messageId = string(eventJson, "messageId");
             Member member = client.fetchMember(islandId, dodoId);
-            String interactCustomId = string(eventJson.getAsJsonObject("interactCustomId"), "id");
+            String interactCustomId = eventJson.has("interactCustomId") ? string(eventJson, "interactCustomId") : "";
             CardMessageFormSubmitEvent event = new CardMessageFormSubmitEvent(id, timestamp, islandId, channelId,
                     dodoId, messageId, member, interactCustomId, eventJson.getAsJsonArray("formData"));
             fireEvent(CardMessageFormSubmitEvent.class, event);
@@ -146,7 +145,7 @@ public class EventManager {
             String dodoId = string(eventJson, "dodoId");
             String messageId = string(eventJson, "messageId");
             Member member = client.fetchMember(islandId, dodoId);
-            String interactCustomId = string(eventJson.getAsJsonObject("interactCustomId"), "id");
+            String interactCustomId = eventJson.has("interactCustomId") ? string(eventJson, "interactCustomId") : "";
             CardMessageListSubmitEvent event = new CardMessageListSubmitEvent(id, timestamp, islandId, channelId,
                     dodoId, messageId, member, interactCustomId, eventJson.getAsJsonArray("listData"));
             fireEvent(CardMessageListSubmitEvent.class, event);

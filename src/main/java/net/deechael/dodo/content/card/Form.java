@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Form {
 
     @Getter
     @Setter
+    @Accessors(fluent = true)
     private String title;
 
     private final List<Element> elements = new ArrayList<>();
@@ -20,8 +22,9 @@ public class Form {
         this.title = title;
     }
 
-    public void append(Element element) {
+    public Form append(Element element) {
         this.elements.add(element);
+        return this;
     }
 
     public JsonObject get() {
@@ -39,21 +42,27 @@ public class Form {
 
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private String key;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private String title;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private int rows;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private String placeholder = null;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private int minChar;
         @Getter
         @Setter
+        @Accessors(fluent = true)
         private int maxChar;
 
         public Input(String key, String title, int rows, int minChar, int maxChar) {
