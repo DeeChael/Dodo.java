@@ -20,8 +20,7 @@ token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```java
 package net.deechael.dodo.test;
 
-import net.deechael.dodo.api.Bot;
-import net.deechael.dodo.api.MessageContext;
+import net.deechael.dodo.api.*;
 import net.deechael.dodo.configuration.Configuration;
 import net.deechael.dodo.configuration.file.YamlConfiguration;
 import net.deechael.dodo.content.Message;

@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-final class BukkitYaml extends Yaml {
+final class DodoYaml extends Yaml {
 
     private static final Field events;
     private static final Field blockCommentsCollector;
@@ -32,7 +32,7 @@ final class BukkitYaml extends Yaml {
         inlineCommentsCollector = getEmitterField("inlineCommentsCollector");
     }
 
-    public BukkitYaml(@NotNull BaseConstructor constructor, @NotNull Representer representer, @NotNull DumperOptions dumperOptions, @NotNull LoaderOptions loadingConfig) {
+    public DodoYaml(@NotNull BaseConstructor constructor, @NotNull Representer representer, @NotNull DumperOptions dumperOptions, @NotNull LoaderOptions loadingConfig) {
         super(constructor, representer, dumperOptions, loadingConfig);
     }
 
