@@ -35,8 +35,9 @@ public class ListSelector implements Component {
         this.max = max;
     }
 
-    public void append(Element element) {
+    public ListSelector append(Element element) {
         this.elements.add(element);
+        return this;
     }
 
     @Override

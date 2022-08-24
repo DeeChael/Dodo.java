@@ -36,19 +36,18 @@ public class CardMessageTest implements Listener {
         DodoCommand command = new DodoCommand(new BrigadierCommandExecutor(LiteralArgumentBuilder.<MessageContext>literal("card")
                 .executes(context -> {
                     MessageContext messageContext = context.getSource();
-                    Card card = new Card();
-                    card.setTheme(CardThemeType.BLUE);
-                    card.append(new Header("Card title here"));
-                    card.append(new Section("这是一个卡片测试消息"));
-                    ListSelector listSelector = new ListSelector(1, 1);
-                    listSelector.setPlaceholder("Choose a programming language");
-                    listSelector.append(new ListSelector.Element("Java"));
-                    listSelector.append(new ListSelector.Element("C++"));
-                    listSelector.append(new ListSelector.Element("C#"));
-                    listSelector.append(new ListSelector.Element("Kotlin"));
-                    listSelector.append(new ListSelector.Element("Python"));
-                    card.append(listSelector);
-                    CardMessage message = new CardMessage(card);
+                    CardMessage message = new CardMessage(new Card().theme(CardThemeType.BLUE)
+                            .append(new Header("Card title here"))
+                            .append(new Section("这是一个卡片测试消息"))
+                            .append(new ListSelector(1, 1)
+                                    .placeholder("Choose a programming language")
+                                    .append(new ListSelector.Element("Java"))
+                                    .append(new ListSelector.Element("C++"))
+                                    .append(new ListSelector.Element("C#"))
+                                    .append(new ListSelector.Element("Kotlin"))
+                                    .append(new ListSelector.Element("Python"))
+                            )
+                    );
                     messageContext.reply(message);
                     return 1;
                 })
