@@ -22,6 +22,8 @@ public interface Island {
 
     String getSystemChannelId();
 
+    List<Member> getMembers();
+
     List<String> getMuteList();
 
     List<String> getBanList();

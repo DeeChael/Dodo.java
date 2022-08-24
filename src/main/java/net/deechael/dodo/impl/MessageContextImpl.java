@@ -37,7 +37,7 @@ public class MessageContextImpl implements MessageContext {
 
     @Override
     public void reply(Message content) {
-        ((TextChannel) content).send(content, this.messageId);
+        ((TextChannel) channel).send(content, this.messageId);
     }
 
     @Override

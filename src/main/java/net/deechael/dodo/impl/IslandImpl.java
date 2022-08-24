@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.deechael.dodo.API;
 import net.deechael.dodo.api.Channel;
 import net.deechael.dodo.api.Island;
+import net.deechael.dodo.api.Member;
 import net.deechael.dodo.api.Role;
 import net.deechael.dodo.gate.Gateway;
 import net.deechael.dodo.network.Route;
@@ -42,9 +43,29 @@ public class IslandImpl implements Island {
         this.coverUrl = info.get("coverUrl").getAsString();
         this.memberCount = info.get("memberCount").getAsInt();
         this.onlineMemberCount = info.get("onlineMemberCount").getAsInt();
-        this.description = info.get("description").getAsString();
+        this.description = info.has("description") ? info.get("description").getAsString() : "";
         this.defaultChannelId = info.get("defaultChannelId").getAsString();
         this.systemChannelId = info.get("systemChannelId").getAsString();
+    }
+
+    @Override
+    public List<Member> getMembers() {
+        List<Member> members = new ArrayList<>();
+        long maxId = 0;
+        int times = this.memberCount % 100 == 0 ? this.memberCount / 100 : this.memberCount / 100 + 1;
+        for (int i = 0; i < times; i++) {
+            JsonObject data = gateway.executeRequest(API.V1.Island.list()
+                    .param("islandId", getId())
+                    .param("pageSize", 100)
+                    .param("maxId", maxId)).getAsJsonObject();
+            maxId = data.get("maxId").getAsLong();
+            for (JsonElement element : data.getAsJsonArray("list")) {
+                JsonObject jsonObject = element.getAsJsonObject();
+                jsonObject.addProperty("islandId", getId());
+                members.add(new MemberImpl(gateway, jsonObject));
+            }
+        }
+        return members;
     }
 
     @Override

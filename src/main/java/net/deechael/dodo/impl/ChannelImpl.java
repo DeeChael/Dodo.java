@@ -29,7 +29,7 @@ public class ChannelImpl implements Channel {
     public ChannelImpl(Gateway gateway, JsonObject info) {
         this.gateway = gateway;
         this.id = info.get("channelId").getAsString();
-        this.name = info.get("name").getAsString();
+        this.name = info.get("channelName").getAsString();
         this.type = ChannelType.of(info.get("channelType").getAsInt());
         this.islandId = info.get("islandId").getAsString();
         this.isDefault = info.get("defaultFlag").getAsInt() == 1;

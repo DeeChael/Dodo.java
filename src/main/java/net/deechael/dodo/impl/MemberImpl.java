@@ -80,62 +80,109 @@ public class MemberImpl implements Member {
 
     @Override
     public void setNickname(String nickname) {
-
+        Route route = API.V1.Member.nicknameEdit()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("nickName", nickname);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void mute(int seconds) {
-
+        Route route = API.V1.Member.muteAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("duration", seconds);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void mute(int seconds, String reason) {
-
+        Route route = API.V1.Member.muteAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("duration", seconds)
+                .param("reason", reason);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void unmute() {
-
+        Route route = API.V1.Member.muteRemove()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId());
+        gateway.executeRequest(route);
     }
 
     @Override
     public void ban() {
-
+        Route route = API.V1.Member.banAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId());
+        gateway.executeRequest(route);
     }
 
     @Override
     public void ban(String reason) {
-
+        Route route = API.V1.Member.banAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("reason", reason);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void banNotice(String channelId) {
-
+        Route route = API.V1.Member.banAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("noticeChannelId", channelId);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void banNotice(String channelId, String reason) {
-
+        Route route = API.V1.Member.banAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("noticeChannelId", channelId)
+                .param("reason", reason);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void unban() {
-
+        Route route = API.V1.Member.banRemove()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId());
+        gateway.executeRequest(route);
     }
 
     @Override
     public void send(Message content) {
-
+        Route route = API.V1.Personal.messageSend()
+                .param("dodoId", getId())
+                .param("messageType", content.getType().getCode())
+                .param("messageBody", content.get());
+        gateway.executeRequest(route);
     }
 
     @Override
     public void addRole(String roleId) {
-
+        Route route = API.V1.Role.memberAdd()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("roleId", roleId);
+        gateway.executeRequest(route);
     }
 
     @Override
     public void removeRole(String roleId) {
-
+        Route route = API.V1.Role.memberRemove()
+                .param("islandId", getIslandId())
+                .param("dodoId", getId())
+                .param("roleId", roleId);
+        gateway.executeRequest(route);
     }
 
 }
