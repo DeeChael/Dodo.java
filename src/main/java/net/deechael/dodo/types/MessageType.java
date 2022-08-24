@@ -1,5 +1,7 @@
 package net.deechael.dodo.types;
 
+import lombok.Getter;
+
 public enum MessageType {
 
     TEXT(1, "text"),
@@ -8,20 +10,14 @@ public enum MessageType {
     CARD(6, "card"),
     UNKNOWN(-1, "unknown");
 
+    @Getter
     private final int code;
+    @Getter
     private final String name;
 
     MessageType(int code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static MessageType of(int code) {

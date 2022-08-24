@@ -24,4 +24,6 @@ public @interface Parameter {
      */
     String mustBe() default "";
 
+    String description() default "";
+
 }
