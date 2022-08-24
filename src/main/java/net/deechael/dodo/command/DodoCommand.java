@@ -12,15 +12,40 @@ public final class DodoCommand {
     private final List<String> aliases = new ArrayList<>();
     private final List<String> prefixes = new ArrayList<>();
 
-    private CommandExecutor executor;
+    private final CommandExecutor executor;
+
+    private ExceptionExecutor exceptionExecutor = null;
 
     private String regex = null;
 
     private final boolean mergeRest = false;
 
-    public DodoCommand(String name) {
+    public DodoCommand(BrigadierCommandExecutor executor) {
+        this.name = executor.getName();
+        this.prefixes.add("/");
+        this.executor = executor;
+    }
+
+    public DodoCommand(String name, SimpleCommandExecutor executor) {
         this.name = name;
         this.prefixes.add("/");
+        this.executor = executor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CommandExecutor getExecutor() {
+        return executor;
+    }
+
+    public ExceptionExecutor getExceptionExecutor() {
+        return exceptionExecutor;
+    }
+
+    public String getRegex() {
+        return regex;
     }
 
     public List<String> getAliases() {
@@ -57,11 +82,6 @@ public final class DodoCommand {
 
     public DodoCommand setRegex(String regex) {
         this.regex = regex;
-        return this;
-    }
-
-    public DodoCommand setExecutor(CommandExecutor executor) {
-        this.executor = executor;
         return this;
     }
 

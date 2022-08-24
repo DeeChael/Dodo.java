@@ -3,6 +3,7 @@ package net.deechael.dodo.impl;
 import ch.qos.logback.classic.Level;
 import net.deechael.dodo.api.Bot;
 import net.deechael.dodo.api.Client;
+import net.deechael.dodo.command.DodoCommand;
 import net.deechael.dodo.event.Listener;
 import net.deechael.dodo.utils.LoggerUtils;
 import org.slf4j.Logger;
@@ -51,6 +52,11 @@ public class DodoBot implements Bot {
     @Override
     public void addEventListener(Listener listener) {
         this.client.addEventListener(listener);
+    }
+
+    @Override
+    public void registerCommand(DodoCommand command) {
+        this.client.registerCommand(command);
     }
 
     @Override

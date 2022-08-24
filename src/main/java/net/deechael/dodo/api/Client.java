@@ -1,5 +1,6 @@
 package net.deechael.dodo.api;
 
+import net.deechael.dodo.command.DodoCommand;
 import net.deechael.dodo.content.Message;
 import net.deechael.dodo.event.Listener;
 
@@ -12,6 +13,8 @@ public interface Client {
     boolean isStart();
 
     void addEventListener(Listener listener);
+
+    void registerCommand(DodoCommand command);
 
     Island fetchIsland(String islandId);
 

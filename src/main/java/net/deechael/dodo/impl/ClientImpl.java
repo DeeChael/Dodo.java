@@ -2,20 +2,23 @@ package net.deechael.dodo.impl;
 
 import com.google.gson.JsonObject;
 import net.deechael.dodo.API;
-import net.deechael.dodo.api.Channel;
-import net.deechael.dodo.api.Client;
-import net.deechael.dodo.api.Island;
-import net.deechael.dodo.api.Member;
+import net.deechael.dodo.api.*;
+import net.deechael.dodo.command.CommandManager;
+import net.deechael.dodo.command.DodoCommand;
 import net.deechael.dodo.content.Message;
+import net.deechael.dodo.content.TextMessage;
 import net.deechael.dodo.event.EventManager;
 import net.deechael.dodo.event.Listener;
+import net.deechael.dodo.event.channel.ChannelMessageEvent;
 import net.deechael.dodo.gate.Gateway;
 import net.deechael.dodo.network.Requester;
 import net.deechael.dodo.network.Route;
 import net.deechael.dodo.network.WebSocketReceiver;
+import net.deechael.dodo.types.MessageType;
 import okhttp3.OkHttpClient;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ClientImpl implements Client {
@@ -27,6 +30,7 @@ public class ClientImpl implements Client {
     private final Gateway gateway;
 
     private final EventManager eventManager;
+    private final CommandManager commandManager;
 
     private boolean started = false;
 
@@ -37,6 +41,7 @@ public class ClientImpl implements Client {
         this.gateway = new Gateway(new Requester(this.client, this.clientId, this.token),
                 new WebSocketReceiver(this.client, this.clientId, this.token, this::pkgReceive));
         this.eventManager = new EventManager(this);
+        this.commandManager = new CommandManager();
     }
 
     @Override
@@ -55,6 +60,11 @@ public class ClientImpl implements Client {
     @Override
     public void addEventListener(Listener listener) {
         this.eventManager.addListener(listener);
+    }
+
+    @Override
+    public void registerCommand(DodoCommand command) {
+        this.commandManager.register(command);
     }
 
     @Override
@@ -103,10 +113,23 @@ public class ClientImpl implements Client {
 
     private void pkgReceive(JsonObject pkg) {
         JsonObject data = pkg.getAsJsonObject("data");
-        if (data.get("eventType").getAsString() == "2001") {
+        if (Objects.equals(data.get("eventType").getAsString(), "2001")) {
             if (data.getAsJsonObject("eventBody").get("messageType").getAsInt() == 1) {
                 try {
-                    // TODO: command
+                    long timestamp = getLong(data, "timestamp");
+                    JsonObject eventJson = data.getAsJsonObject("eventBody");
+                    String islandId = string(eventJson, "islandId");
+                    String channelId = string(eventJson, "channelId");
+                    String dodoId = string(eventJson, "dodoId");
+                    String messageId = string(eventJson, "messageId");
+                    Member member = this.fetchMember(islandId, dodoId);
+
+                    MessageType type = MessageType.of(integer(eventJson, "messageType"));
+                    Message body = Message.parse(type, eventJson.getAsJsonObject("messageBody"));
+
+                    MessageContext context = new MessageContextImpl(timestamp, messageId, body,
+                            member, this.fetchChannel(islandId, channelId), this.fetchIsland(islandId));
+                    commandManager.execute(context, ((TextMessage) body).getContent());
                 } catch (Exception ignored) {
                     // To prevent the event won't be fired
                 }
@@ -114,5 +137,17 @@ public class ClientImpl implements Client {
         }
         this.eventManager.callEvent(data);
     }
+    private String string(JsonObject object, String key) {
+        return object.get(key).getAsString();
+    }
+
+    private int integer(JsonObject object, String key) {
+        return object.get(key).getAsInt();
+    }
+
+    private long getLong(JsonObject object, String key) {
+        return object.get(key).getAsLong();
+    }
+
 
 }

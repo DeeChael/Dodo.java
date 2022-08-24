@@ -1,6 +1,12 @@
 package net.deechael.dodo.test;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import net.deechael.dodo.api.*;
+import net.deechael.dodo.command.BrigadierCommandExecutor;
+import net.deechael.dodo.command.DodoCommand;
+import net.deechael.dodo.command.SimpleCommandExecutor;
 import net.deechael.dodo.configuration.Configuration;
 import net.deechael.dodo.configuration.file.YamlConfiguration;
 import net.deechael.dodo.content.Message;
@@ -13,6 +19,7 @@ import net.deechael.dodo.impl.DodoBot;
 import net.deechael.dodo.types.MessageType;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class TestBot implements Listener /* 继承监听器 */{
 
@@ -25,7 +32,7 @@ public class TestBot implements Listener /* 继承监听器 */{
         Message bodyContent = event.getBody(); // 获取消息的内容
         if (bodyContent.getType() == MessageType.TEXT) { // 如果是纯文本内容
             String content = bodyContent.get().getAsJsonObject().get("content").getAsString(); // 通过Gson库获得消息的纯文本内容
-            context.reply(new TextMessage("你发送了：" + content)); // 回复用户一个纯文本内容
+            //context.reply(new TextMessage("你发送了：" + content)); // 回复用户一个纯文本内容
         }
     }
 
@@ -41,6 +48,32 @@ public class TestBot implements Listener /* 继承监听器 */{
         Bot bot = new DodoBot(configuration.getInt("client-id"), configuration.getString("token"));
         // 注册事件监听器
         bot.addEventListener(new TestBot());
+        // 注册指令，Brigadier格式注册方法，因为Brigadier指令创建时要求输入名称，所以只需要传入一个执行器即可
+        bot.registerCommand(new DodoCommand(new BrigadierCommandExecutor(LiteralArgumentBuilder.<MessageContext>literal("brigadier")
+                .then(RequiredArgumentBuilder.<MessageContext, String>argument("name", StringArgumentType.string())
+                        .executes(context -> {
+                            MessageContext messageContext = context.getSource();
+                            messageContext.reply(new TextMessage("你输入了一个参数：" + StringArgumentType.getString(context, "name")));
+                            return 1;
+                        }))
+                .executes(context -> {
+                    MessageContext messageContext = context.getSource();
+                    messageContext.reply(new TextMessage("你执行了一个无参指令"));
+                    return 1;
+                })
+                .build())));
+        // Bukkit风格的Simple指令注册方法，第一个参数为指令名称，第二个为执行器
+        bot.registerCommand(new DodoCommand("simple", new SimpleCommandExecutor() {
+            @Override
+            public void execute(Member sender, MessageContext message, String[] args) {
+                System.out.println(Arrays.toString(args));
+                if (args.length == 1) {
+                    if (args[0].equalsIgnoreCase("a")) {
+                        message.reply(new TextMessage("success!"));
+                    }
+                }
+            }
+        }));
         // 添加任务，会在成功连接websocket以后运行
         /*
         bot.runAfter(() -> {

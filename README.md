@@ -8,8 +8,14 @@
 
 2022.8.24 16:10更新：现在基本做完了，已经可以使用了
 
+## 吹个水
+我原本是专注于KOOK机器人开发的\
+但是啊，8.23号晚上我闲着没事干看了一眼渡渡的开发文档\
+一看，这个卡片消息做的已经跟discord差不多了，KOOK一直不更新卡片的功能，我一看，这好啊\
+翻了一下别人做的SDK，我看着有点麻烦，而且不合我口味，于是无聊写了这个SDK
+
 ## TODO List
-1. 指令系统 (Brigadier 和 Simple两种注册方法，后续会添加Annotation方法)
+~~1. 指令系统 (Brigadier 和 Simple两种注册方法，后续会添加Annotation方法)~~  **2022.8.24 17:30 已更新**
 
 ## 快速上手
 配置文件：
@@ -20,7 +26,13 @@ token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```java
 package net.deechael.dodo.test;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import net.deechael.dodo.api.*;
+import net.deechael.dodo.command.BrigadierCommandExecutor;
+import net.deechael.dodo.command.DodoCommand;
+import net.deechael.dodo.command.SimpleCommandExecutor;
 import net.deechael.dodo.configuration.Configuration;
 import net.deechael.dodo.configuration.file.YamlConfiguration;
 import net.deechael.dodo.content.Message;
@@ -33,6 +45,7 @@ import net.deechael.dodo.impl.DodoBot;
 import net.deechael.dodo.types.MessageType;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class TestBot implements Listener /* 继承监听器 */{
 
@@ -45,7 +58,7 @@ public class TestBot implements Listener /* 继承监听器 */{
         Message bodyContent = event.getBody(); // 获取消息的内容
         if (bodyContent.getType() == MessageType.TEXT) { // 如果是纯文本内容
             String content = bodyContent.get().getAsJsonObject().get("content").getAsString(); // 通过Gson库获得消息的纯文本内容
-            context.reply(new TextMessage("你发送了：" + content)); // 回复用户一个纯文本内容
+            //context.reply(new TextMessage("你发送了：" + content)); // 回复用户一个纯文本内容
         }
     }
 
@@ -61,13 +74,41 @@ public class TestBot implements Listener /* 继承监听器 */{
         Bot bot = new DodoBot(configuration.getInt("client-id"), configuration.getString("token"));
         // 注册事件监听器
         bot.addEventListener(new TestBot());
+        // 注册指令，Brigadier格式注册方法，因为Brigadier指令创建时要求输入名称，所以只需要传入一个执行器即可
+        bot.registerCommand(new DodoCommand(new BrigadierCommandExecutor(LiteralArgumentBuilder.<MessageContext>literal("brigadier")
+                .then(RequiredArgumentBuilder.<MessageContext, String>argument("name", StringArgumentType.string())
+                        .executes(context -> {
+                            MessageContext messageContext = context.getSource();
+                            messageContext.reply(new TextMessage("你输入了一个参数：" + StringArgumentType.getString(context, "name")));
+                            return 1;
+                        }))
+                .executes(context -> {
+                    MessageContext messageContext = context.getSource();
+                    messageContext.reply(new TextMessage("你执行了一个无参指令"));
+                    return 1;
+                })
+                .build())));
+        // Bukkit风格的Simple指令注册方法，第一个参数为指令名称，第二个为执行器
+        bot.registerCommand(new DodoCommand("simple", new SimpleCommandExecutor() {
+            @Override
+            public void execute(Member sender, MessageContext message, String[] args) {
+                System.out.println(Arrays.toString(args));
+                if (args.length == 1) {
+                    if (args[0].equalsIgnoreCase("a")) {
+                        message.reply(new TextMessage("success!"));
+                    }
+                }
+            }
+        }));
         // 添加任务，会在成功连接websocket以后运行
+        /*
         bot.runAfter(() -> {
             // 将本地图片“test.png”上传至渡渡的服务器
             String url = bot.getClient().uploadImage(new File("test.png"));
             // 输出图片的url
             System.out.println(url);
         });
+         */
         // 启动机器人
         bot.start();
     }
