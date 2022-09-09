@@ -36,6 +36,39 @@ public final class API {
                 return new Route(POST, "bot/leave");
             }
 
+            @RequiredParameters({
+                    @Parameter(name = "pageSize", type = int.class),
+                    @Parameter(name = "maxId", type = long.class)
+            })
+            @Responses(value = {
+                    @Response(name = "maxId", type = Object.class)
+            }, extra = {
+                    @ListItemResponse(name = "list", content = {
+                            @Response(name = "dodoId", type = String.class),
+                            @Response(name = "nickName", type = String.class),
+                            @Response(name = "avatarUrl", type = String.class)
+                    })
+            })
+            public static Route inviteList() {
+                return new Route(POST, "bot/invite/list");
+            }
+
+            @RequiredParameters({
+                    @Parameter(name = "dodoId", type = String.class)
+            })
+            @NonResponses
+            public static Route inviteAdd() {
+                return new Route(POST, "bot/invite/add");
+            }
+
+            @RequiredParameters({
+                    @Parameter(name = "dodoId", type = String.class)
+            })
+            @NonResponses
+            public static Route inviteRemove() {
+                return new Route(POST, "bot/invite/remove");
+            }
+
         }
 
         public static class Island {
@@ -242,6 +275,43 @@ public final class API {
             public static Route messageReactionRemove() {
                 return new Route(POST, "channel/message/reaction/remove");
             }
+
+            @RequiredParameters({
+                    @Parameter(name = "islandId", type = String.class),
+                    @Parameter(name = "dodoId", type = String.class)
+            })
+            @Responses({
+                    @Response(name = "channelId", type = String.class),
+                    @Response(name = "spkStatus", type = int.class),
+                    @Response(name = "micStatus", type = int.class),
+                    @Response(name = "micSortStatus", type = int.class)
+            })
+            public static Route voiceMemberStatus() {
+                return new Route(POST, "channel/voice/member/status");
+            }
+
+            @RequiredParameters({
+                    @Parameter(name = "islandId", type = String.class),
+                    @Parameter(name = "dodoId", type = String.class),
+                    @Parameter(name = "channelId", type = String.class)
+            })
+            @NonResponses
+            public static Route voiceMemberMove() {
+                return new Route(POST, "channel/voice/member/move");
+            }
+
+            @RequiredParameters({
+                    @Parameter(name = "channelId", type = String.class),
+                    @Parameter(name = "dodoId", type = String.class),
+                    @Parameter(name = "operateType", type = int.class)
+            })
+            @NonResponses
+            public static Route voiceMemberEdit() {
+                return new Route(POST, "channel/voice/member/edit");
+            }
+
+
+            // TODO article related routes
 
         }
 

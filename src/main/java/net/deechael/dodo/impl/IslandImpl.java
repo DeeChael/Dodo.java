@@ -112,7 +112,13 @@ public class IslandImpl implements Island {
         for (JsonElement element : gateway.executeRequest(route).getAsJsonArray()) {
             JsonObject object = element.getAsJsonObject();
             object.addProperty("islandId", getId());
-            channels.add(new ChannelImpl(gateway, object));
+            if (object.get("channelType").getAsInt() == 1) {
+                channels.add(new TextChannelImpl(gateway, object));
+            } else if (object.get("channelType").getAsInt() == 2) {
+                channels.add(new VoiceChannelImpl(gateway, object));
+            } else {
+                channels.add(new ChannelImpl(gateway, object));
+            }
         }
         return channels;
     }

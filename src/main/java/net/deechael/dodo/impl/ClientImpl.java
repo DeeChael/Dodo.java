@@ -13,6 +13,7 @@ import net.deechael.dodo.gate.Gateway;
 import net.deechael.dodo.network.Requester;
 import net.deechael.dodo.network.Route;
 import net.deechael.dodo.network.WebSocketReceiver;
+import net.deechael.dodo.types.ChannelType;
 import net.deechael.dodo.types.MessageType;
 import okhttp3.OkHttpClient;
 
@@ -79,9 +80,13 @@ public class ClientImpl implements Client {
                 .param("islandId", islandId)
                 .param("channelId", channelId);
         JsonObject info = gateway.executeRequest(route).getAsJsonObject();
-        if (info.get("channelType").getAsInt() == 1)
+        if (info.get("channelType").getAsInt() == 1) {
             return new TextChannelImpl(gateway, info);
-        return new ChannelImpl(gateway, info);
+        } else if (info.get("channelType").getAsInt() == 2) {
+            return new VoiceChannelImpl(gateway, info);
+        } else {
+            return new ChannelImpl(gateway, info);
+        }
     }
 
     @Override

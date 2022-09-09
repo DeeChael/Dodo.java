@@ -44,7 +44,7 @@ public interface Message {
             long size = object.get("size").getAsLong();
             return new FileMessage(url, name, size);
         } else if (type == MessageType.CARD) {
-            // TODO
+            // TODO must be done because event system can receive card message now
         }
         return null;
     }

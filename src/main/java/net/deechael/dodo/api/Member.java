@@ -1,9 +1,7 @@
 package net.deechael.dodo.api;
 
 import net.deechael.dodo.content.Message;
-import net.deechael.dodo.types.UserOnlineDeviceType;
-import net.deechael.dodo.types.UserOnlineStatusType;
-import net.deechael.dodo.types.UserSexType;
+import net.deechael.dodo.types.*;
 
 import java.util.List;
 
@@ -56,5 +54,17 @@ public interface Member {
     void addRole(String roleId);
 
     void removeRole(String roleId);
+
+    interface VoiceStatus {
+
+        String getChannelId();
+
+        Status getSpeakingStatus();
+
+        Status getMicrophoneStatus();
+
+        MicrophoneSortStatus getMicrophoneSortStatus();
+
+    }
 
 }
