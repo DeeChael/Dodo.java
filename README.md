@@ -1,21 +1,10 @@
 # Dodo.java
 渡渡语音的Java SDK
 
-我看现在好像没有几个SDK有好的结构的\
-这个项目将会参考部分开黑啦SDK的结构
+本项目参考了 [@TWT233](https://github.com/TWT233) 制作的 KOOK python sdk [khl.py](https://github.com/TWT233/khl.py) 进行开发
 
-本项目与[KOOK.java](https://www.github.com/DeeChael/KOOK.java)同步开发，结构类似，请勿见怪
-
-2022.8.24 16:10更新：现在基本做完了，已经可以使用了
-
-## 吹个水
-我原本是专注于KOOK机器人开发的\
-但是啊，8.23号晚上我闲着没事干看了一眼渡渡的开发文档\
-一看，这个卡片消息做的已经跟discord差不多了，KOOK一直不更新卡片的功能，我一看，这好啊\
-翻了一下别人做的SDK，我看着有点麻烦，而且不合我口味，于是无聊写了这个SDK
-
-## TODO List
-~~1. 指令系统 (Brigadier 和 Simple两种注册方法，后续会添加Annotation方法)~~  **2022.8.24 17:30 已更新**
+2022.8.24 更新：现在基本做完了，已经可以使用了
+2023.10.17 虽然我之前考虑过继续进行该 SDK 的开发，但是由于时间问题苦苦没有开始，但是已经有大佬fork了此项目继续进行开发：https://github.com/Ghost-chu/Dodo.java 大家也可以支持一下这位大佬
 
 ## 快速上手
 配置文件：
@@ -23,6 +12,7 @@
 client-id: 00000000
 token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
+机器人启动类：
 ```java
 package net.deechael.dodo.test;
 
